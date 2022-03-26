@@ -1,0 +1,70 @@
+/********************************************************
+Purpose of code: To calculate the course average for each course and the final average
+average of a student 
+Date: 2022-02-14 
+Created by: Angela Xu
+*********************************************************/
+
+#include <cmath>
+#include <iostream>
+using namespace std;
+
+int main() {
+
+  int cnt;      // initiate row variable
+  int marks;    // initiate column variable
+  double final; // initiate final average
+
+  // get row number which is the number of courses
+  cout << "How many courses do you have? ";
+  cin >> cnt;
+
+  // get the number of assignments which is the number of columns
+  cout << "How many assignments do you have per course? ";
+  cin >> marks;
+
+  // create 2-d array pointer
+  int **pointer = new int *[cnt];
+
+  for (int i = 0; i < cnt; i++) {
+    // create the marks array within the course array
+    pointer[i] = new int[marks];
+
+    cout << "Please input your assignment marks for Course " << i + 1 << ": "
+         << endl;
+    // get assignment marks for each course
+    for (int j = 0; j < marks; j++) {
+      cin >> pointer[i][j];
+    }
+  }
+
+  for (int i = 0; i < cnt; i++) {
+    double sum = 0; // initiate sum counter
+    for (int j = 0; j < marks; j++) {
+      sum +=
+          pointer[i][j]; // add the marks of each assignment for the ith course
+    }
+    double average = sum / marks; // calculate the average for the ith course
+    final += average;
+    cout << "Course " << i + 1 << " average: " << round(average * 100) / 100
+         << " grades: ";
+
+    for (int j = 0; j < marks; j++) {
+      cout << pointer[i][j] << " ";
+    }
+    cout << endl;
+  }
+
+  final = final / cnt; // find final average by dividing the running total of
+                       // averages by the number of courses they have
+
+  cout << "Overall final: " << round(final * 100) / 100;
+
+	//free the array
+	for (int r = 0; r < cnt; r++){
+    delete[] pointer[r];
+		}
+  delete[] pointer;
+	
+  return 0;
+}
